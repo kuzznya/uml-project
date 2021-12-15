@@ -101,3 +101,23 @@ profi.ru - Посредник между профессионалами и кл�
 ![Order state](docs/order_state.jpg)
 
 ![Provider state](docs/provider_state.jpg)
+
+## Screenshots
+
+![User creation](docs/user_creation_screenshot.png)
+
+![Authentication](docs/auth_screenshot.png)
+
+![Services](docs/services_screenshot.png)
+
+![Service](docs/service_screenshot.png)
+
+![Unverified providers](docs/unverified_providers_screenshot.png)
+
+![Verify provider](docs/verify_provider_screenshot.png)
+
+![Notification](docs/notification_screenshot.jpg)
+
+![RabbitMQ queues](docs/rabbitmq_queues_screenshot.png)
+
+![Notification service eventual consistency](docs/notification-service_async_screenshot.png)

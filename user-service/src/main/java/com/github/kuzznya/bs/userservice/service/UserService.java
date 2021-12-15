@@ -42,10 +42,10 @@ public class UserService {
     }
 
     public AppUser updateUser(AppUserEntity entity, UserRole role) {
-        AppUserEntity result = repository.save(entity
-                .withRole(role)
-                .withPassword(encoder.encode(entity.getPassword())));
-        return entityToModel(result);
+        AppUserEntity prepared = entity.withRole(role).withPassword(encoder.encode(entity.getPassword()));
+        AppUser result = entityToModel(repository.save(prepared));
+        log.debug("User {} updated, role is {}", result.getId(), role);
+        return result;
     }
 
     public Optional<AppUser> findByEmail(String email) {
