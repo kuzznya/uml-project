@@ -66,38 +66,38 @@ profi.ru - Посредник между профессионалами и кл�
 
 ### Use case diagrams
 
-![General use case](general_use_case.jpg)
+![General use case](docs/general_use_case.jpg)
 
-![Interaction use case](interaction_use_case.jpg)
+![Interaction use case](docs/interaction_use_case.jpg)
 
-![Manage money use case](manage_money_use_case.jpg)
+![Manage money use case](docs/manage_money_use_case.jpg)
 
-![Manage orders use case](manage_orders_use_case.jpg)
+![Manage orders use case](docs/manage_orders_use_case.jpg)
 
-![Manage subscriptions use case](manage_subscriptions_use_case.jpg)
+![Manage subscriptions use case](docs/manage_subscriptions_use_case.jpg)
 
 ### Activity diagrams
 
-![Manage orders activity](manage_orders_activity.jpg)
+![Manage orders activity](docs/manage_orders_activity.jpg)
 
-![Manage subscriptions activity](manage_subscriptions_activity.jpg)
+![Manage subscriptions activity](docs/manage_subscriptions_activity.jpg)
 
-![Provider register activity](provider_register_activity.jpg)
+![Provider register activity](docs/provider_register_activity.jpg)
 
 ### Class diagrams
 
-![Entity diagram](entities.jpg)
+![Entity diagram](docs/entities.jpg)
 
 ### Deployment diagrams
 
-![Cluster deployment](cluster_deployment.jpg)
+![Cluster deployment](docs/cluster_deployment.jpg)
 
 ### Sequence diagrams
 
-![Order sequence](order_sequence.jpg)
+![Order sequence](docs/order_sequence.jpg)
 
 ### State diagrams
 
-![Order state](order_state.jpg)
+![Order state](docs/order_state.jpg)
 
-![Provider state](provider_state.jpg)
+![Provider state](docs/provider_state.jpg)
