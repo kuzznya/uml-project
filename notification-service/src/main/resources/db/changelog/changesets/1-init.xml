@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+                   http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+    <property name="json_type" value="jsonb" dbms="postgresql"/>
+    <property name="json_type" value="json" dbms="h2"/>
+
+    <property name="timestamp_default_Value" value="now()" dbms="postgresql"/>
+    <property name="timestamp_default_value" value="current_timestamp" dbms="h2"/>
+
+    <changeSet id="1" author="Ilya Kuznetsov">
+        <createTable tableName="user_email">
+            <column name="id" type="int">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

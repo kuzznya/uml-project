@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+                   http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+    <property name="json_type" value="jsonb" dbms="postgresql"/>
+    <property name="json_type" value="json" dbms="h2"/>
+
+    <property name="timestamp_default_Value" value="now()" dbms="postgresql"/>
+    <property name="timestamp_default_value" value="current_timestamp" dbms="h2"/>
+
+    <changeSet id="1" author="Ilya Kuznetsov">
+        <createTable tableName="service">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="description" type="varchar(1024)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="template_id" type="int"/>
+        </createTable>
+
+        <createTable tableName="order_template">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="service"
+                                 baseColumnNames="template_id"
+                                 referencedTableName="order_template"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_service_order_template"
+                                 deleteCascade="true"
+        />
+
+        <createTable tableName="order_template_item">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="template_id" type="int">
+                <constraints foreignKeyName="fk_item_template" references="order_template(id)" nullable="false" deleteCascade="true"/>
+            </column>
+            <column name="content" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="subscription_limit">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="service_id" type="int">
+                <constraints foreignKeyName="fk_limit_service" references="service(id)" nullable="false" deleteCascade="true"/>
+            </column>
+            <column name="limit" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deprecated" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="provider">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="information" type="text"/>
+            <column name="status" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="provider_employee">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="provider_id" type="int">
+                <constraints foreignKeyName="fk_provider_employee_provider" references="provider(id)" nullable="false" deleteCascade="true"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="service_provider">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="service_id" type="int">
+                <constraints foreignKeyName="fk_service_provider_service" references="service(id)" nullable="false" deleteCascade="true"/>
+            </column>
+            <column name="provider_id" type="int">
+                <constraints foreignKeyName="fk_service_provider_provider" references="provider(id)" nullable="false" deleteCascade="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="subscription">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="service_id" type="int">
+                <constraints foreignKeyName="fk_subscription_service" references="service(id)" nullable="false" deleteCascade="true"/>
+            </column>
+            <column name="provider_id" type="int">
+                <constraints foreignKeyName="fk_subscription_provider" references="provider(id)" nullable="true"/>
+            </column>
+            <column name="status" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="limit" type="int">
+                <constraints foreignKeyName="fk_subscription_limit" references="subscription_limit(id)" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="order">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="subscription_id" type="int">
+                <constraints foreignKeyName="fk_order_subscription" references="subscription(id)" nullable="false" deleteCascade="true"/>
+            </column>
+            <column name="status" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_timestamp" type="timestamp" defaultValueComputed="${timestamp_default_value}"/>
+        </createTable>
+
+        <createTable tableName="order_value">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="item_id" type="int">
+                <constraints foreignKeyName="fk_order_value_order_template_item" references="order_template_item(id)" nullable="false" deleteCascade="true"/>
+            </column>
+            <column name="value" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,40 @@
+server:
+  port: ${PORT:8080}
+  tomcat:
+    threads:
+      max: 20
+  error:
+    include-message: always
+    include-exception: false
+    include-stacktrace: never
+    include-binding-errors: always
+
+spring:
+  application:
+    name: notification-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    test-connection: true
+    properties:
+      mail.smtp:
+        auth: true
+        starttls.enable: true
+  rabbitmq:
+    host: rabbitmq
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+
+security:
+  secret: ${SEC_SECRET}
+  token-ttl: 1d
+

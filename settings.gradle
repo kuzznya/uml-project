@@ -1,0 +1,5 @@
+rootProject.name = 'business-services'
+
+include 'order-service'
+include 'user-service'
+include 'notification-service'
